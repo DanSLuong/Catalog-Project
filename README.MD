@@ -1,5 +1,23 @@
 # Build an Item Catalog Application Project
 
+### Project Description
+
+The goal of this project is to develop a web application that will provide a list of items of different categories while securing the data using third party user registration and authentication.
+
+
+### Languages and Frameworks Used
+* [Python](https://www.python.org/downloads/)
+* [FLASK](http://flask.pocoo.org/)
+* [HTML](https://www.w3schools.com/html/)
+* [CSS](https://www.w3schools.com/css/)
+
+
+### Necessary Files and Tools
+* [`fullstack-nanodegree-vm`](https://github.com/udacity/fullstack-nanodegree-vm) clone
+* [`Catalog-Project`](https://github.com/DanSLuong/Catalog-Project) clone
+* A terminal instance (Linux, MacOS, or third party Unix terminal in Windows)
+
+
 ### How to run this project
 
 1. Install `Vagrant` and `VirtualBox`
