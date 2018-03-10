@@ -1,11 +1,11 @@
 import os
 import sys
 from sqlalchemy import Column, ForeignKey, Integer, String
-from sqlalchemy.ext.declarative import delcarative_base
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
 
-Base = delcarative_base()
+Base = declarative_base()
 
 class Team(Base):
     __tablename__ = 'team'
@@ -18,6 +18,8 @@ class Team(Base):
         """Return object data in easily serializeable format"""
         return{
             'name': self.name,
+            'city': self.city,
+            'state': self.state,
             'id': self.id,
         }
 
@@ -28,7 +30,7 @@ class Player(Base):
     name = Column(String(250), nullable=False)
     id = Column(Integer, primary_key=True)
     position = Column(String(20))
-    team_id = Column(Integer, ForiegnKey('Team.id'))
+    team_id = Column(Integer, ForeignKey('team.id'))
     team = relationship(Team)
 
     @property
@@ -37,6 +39,7 @@ class Player(Base):
         return{
             'name': self.name,
             'position': self.position,
+            'role': self.role,
             'id': self.id,
         }
 

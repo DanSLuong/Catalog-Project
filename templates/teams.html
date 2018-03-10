@@ -1,0 +1,30 @@
+<html>
+    <head>
+
+    </head>
+
+    <body>
+        <div class='pane'>
+            <h1> Teams </h1>
+            <a href="{{url_for('newTeam')}}">
+                <h3> Add a new NBA team </h3>
+            </a>
+            {% for team in teams %}
+
+            <a href="{{url_for('showPlayers', team_id = team.id)}}">
+                <p>{{team.name}}</p>
+            </a>
+            <p>
+                <a href="{{url_for('editTeam', team_id=team.id)}}">
+                    Edit Team
+                </a>
+            </p>
+            <p>
+                <a href="{{url_for('deleteTeam', team_id=team.id)}}">
+                    Delete Team
+                </a>
+            </p>
+            {% endfor %}
+        </div>
+    </body>
+</html>
