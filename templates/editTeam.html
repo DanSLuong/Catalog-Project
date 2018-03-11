@@ -9,6 +9,24 @@
     <form action="{{url_for('editTeam', team_id = team.id)}}" method='post'>
         <p> Team Name: </p>
         <input type='text' size='30' name='name' placeholder='{{team.name}}'>
+        <p> City: </p>
+        <input type='text' size='30' name='city' placeholder='{{team.city}}'>
+        <p> State: </p>
+        <input type='text' size='30' name='state' placeholder='{{team.state}}'>
+        <p> Conference: </p>
+        {% if team.conference == "West" %}
+        <dd>
+            <input type='radio' name='conference' value='West' checked> West </dd>
+        {% else %}
+        <dd>
+            <input type='radio' name='conference' value='West'> West </dd>
+        {% endif %} {% if team.conference == "East" %}
+        <dd>
+            <input type='radio' name='conference' value='East' checked> East </dd>
+        {% else %}
+        <dd>
+            <input type='radio' name='conference' value='East'> East </dd>
+        {% endif %}
         <input type='submit' value='Edit'>
         <a href="{{url_for('showTeams')}}"> Cancel </a>
     </form>

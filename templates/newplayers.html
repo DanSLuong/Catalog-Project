@@ -1,0 +1,26 @@
+<html>
+
+<head>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <h1> New NBA Player </h1>
+    <form action='#' method='post'>
+        <p> Name: </p>
+        <input type='text' size='30' name='name'>
+        <p> Position: </p>
+        <input type='radio' name='position' value = 'PGuard'> Point Guard </br>
+        <input type='radio' name='position' value='SGuard'> Shooting Guard </br>
+        <input type='radio' name='position' value='SForward'> Small Forward </br>
+        <input type='radio' name='position' value='PForward'> Power Forward </br>
+        <input type='radio' name='position' value='Center'> Center </br>
+        <p> Role: </p>
+        <input type='radio' name='role' value='Starter'> Starter </br>
+        <input type='radio' name='role' value='Bench'> Reserve </br>
+        </br>
+        <input type='submit' value='Create'>
+    </form>
+</body>
+
+</html>

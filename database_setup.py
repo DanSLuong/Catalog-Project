@@ -12,6 +12,9 @@ class Team(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
+    city = Column(String(250), nullable=False)
+    state = Column(String(250), nullable=False)
+    conference = Column(String(250))
 
     @property
     def serialize(self):
@@ -20,6 +23,7 @@ class Team(Base):
             'name': self.name,
             'city': self.city,
             'state': self.state,
+            'conference': self.conference,
             'id': self.id,
         }
 
@@ -29,7 +33,8 @@ class Player(Base):
 
     name = Column(String(250), nullable=False)
     id = Column(Integer, primary_key=True)
-    position = Column(String(20))
+    position = Column(String(250))
+    role = Column(String(250))
     team_id = Column(Integer, ForeignKey('team.id'))
     team = relationship(Team)
 

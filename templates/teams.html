@@ -1,30 +1,30 @@
 <html>
-    <head>
 
-    </head>
+<head>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
+</head>
 
-    <body>
-        <div class='pane'>
-            <h1> Teams </h1>
-            <a href="{{url_for('newTeam')}}">
-                <h3> Add a new NBA team </h3>
-            </a>
-            {% for team in teams %}
+<body>
+    <div class='pane'>
+        <h1> NBA Teams </h1>
+        <a href="{{url_for('newTeam')}}">
+            <p> Add a new NBA team </p>
+        </a>
+        {% for team in teams %}
 
+        <p>
             <a href="{{url_for('showPlayers', team_id = team.id)}}">
-                <p>{{team.name}}</p>
+                <strong> {{team.city}} {{team.name}} </strong>
             </a>
-            <p>
-                <a href="{{url_for('editTeam', team_id=team.id)}}">
-                    Edit Team
-                </a>
-            </p>
-            <p>
-                <a href="{{url_for('deleteTeam', team_id=team.id)}}">
-                    Delete Team
-                </a>
-            </p>
-            {% endfor %}
-        </div>
-    </body>
+            <a href="{{url_for('editTeam', team_id=team.id)}}">
+                Edit
+            </a>
+            <a href="{{url_for('deleteTeam', team_id=team.id)}}">
+                Delete
+            </a>
+        </p>
+        {% endfor %}
+    </div>
+</body>
+
 </html>
