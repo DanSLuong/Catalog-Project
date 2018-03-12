@@ -6,6 +6,8 @@
 
 <body>
     <div class='pane'>
+        <a href="{{url_for('showTeams')}}"> Homepage </a>
+        
         <h1>{{ team.name }}</h1>
 
         {% with messages = get_flashed_messages() %} {% if messages %}

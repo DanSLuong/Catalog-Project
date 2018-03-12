@@ -69,7 +69,7 @@ def showPlayers(team_id):
     return render_template('players.html', players=players, team=team)
 
 # Add a new player
-@app.route('/teams/<int:team_id>/players/new/')
+@app.route('/teams/<int:team_id>/players/new/', methods=['GET', 'POST'])
 def newPlayers(team_id):
     if request.method == 'POST':
         newPlayer = Player(name=request.form['name'], position=request.form['position'], role=request.form['role'], team_id=team_id)
