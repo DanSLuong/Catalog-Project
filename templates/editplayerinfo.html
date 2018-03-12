@@ -27,7 +27,7 @@
             <input type='radio' name='role' value='Bench'> Reserve </dd>
         {% endif %}
         <input type='submit' value='Edit'>
-        <a href='#'> Cancel </a>
+        <a href="{{url_for('showPlayers', team_id=team_id)}}"> Cancel </a>
     </form>
 </body>
 

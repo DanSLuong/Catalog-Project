@@ -70,7 +70,7 @@ def showPlayers(team_id):
 
 # Add a new player
 @app.route('/teams/<int:team_id>/players/new/')
-def newPlayer(team_id):
+def newPlayers(team_id):
     if request.method == 'POST':
         newPlayer = Player(name=request.form['name'], position=request.form['position'], role=request.form['role'], team_id=team_id)
         session.add(newPlayer)
@@ -93,7 +93,7 @@ def editPlayer(team_id, player_id):
         session.commit()
         return redirect(url_for('showPlayers', team_id=team_id))
     else:
-        return render_template('editplayerinfo.html', team_id=team_id, player_id=player_id, player=editedPlayer)
+        return render_template('editplayerinfo.html', team_id=team_id, player_id=player_id, player=editPlayer)
 
 # Delete a player
 @app.route('/teams/<int:team_id>/players/<int:player_id>/delete/', methods=['GET', 'POST'])
