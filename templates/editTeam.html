@@ -5,6 +5,9 @@
 </head>
 
 <body>
+    {% extends "main.html" %}
+    {% block content %}
+    {% include "header.html" %}
     <h1> Edit NBA Team </h1>
     <form action="{{url_for('editTeam', team_id = team.id)}}" method='post'>
         <p> Team Name: </p>
@@ -30,6 +33,7 @@
         <input type='submit' value='Edit'>
         <a href="{{url_for('showTeams')}}"> Cancel </a>
     </form>
+    {% endblock %}
 </body>
 
 </html>

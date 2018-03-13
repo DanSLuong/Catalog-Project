@@ -5,6 +5,9 @@
 </head>
 
 <body>
+    {% extends "main.html" %}
+    {% block content %}
+    {% include "header.html" %}
     <div class='pane'>
         <h1> NBA Teams </h1>
         <a href="{{url_for('newTeam')}}">
@@ -24,6 +27,7 @@
         </p>
         {% endfor %}
     </div>
+    {% endblock %}
 </body>
 
 </html>

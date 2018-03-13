@@ -5,12 +5,15 @@
 </head>
 
 <body>
+    {% extends "main.html" %}
+    {% block content %}
+    {% include "header.html" %}
     <h1> New NBA Player </h1>
     <form action="#" method="post">
         <p> Name: </p>
         <input type='text' size='30' name='name'>
         <p> Position: </p>
-        <input type='radio' name='position' value = 'PG'> Point Guard </br>
+        <input type='radio' name='position' value='PG'> Point Guard </br>
         <input type='radio' name='position' value='SG'> Shooting Guard </br>
         <input type='radio' name='position' value='SF'> Small Forward </br>
         <input type='radio' name='position' value='PF'> Power Forward </br>
@@ -20,8 +23,9 @@
         <input type='radio' name='role' value='Bench'> Reserve </br>
         </br>
         <input type="submit" value="create">
-        <a href="#"> Cancel </a>
+        <a href="#"> Cancel </a>    
     </form>
+    {% endblock %}
 </body>
 
 </html>
