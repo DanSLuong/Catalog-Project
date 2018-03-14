@@ -28,29 +28,22 @@
         {% for i in players %} {% if i.role == 'Starter' %}
     
         <p>
-            <a href="{{url_for('showPlayerInfo', player_id = i.id)}}">
-                {{i.firstName}} {{i.lastName}} {{i.position}}
-            </a>
+            <a href="{{url_for('showPlayerInfo', team_id = team.id, player_id = i.id)}}">
+            {{i.firstName}} {{i.lastName}} {{i.position}}
             <a href="{{url_for('editPlayer', team_id = team.id, player_id = i.id)}}"> Edit </a>
             <a href="{{url_for('deletePlayer', team_id = team.id, player_id = i.id)}}"> Delete </a>
         </p>
-        {% endif %} {% endfor %}
-    
+        {% endif %}
+        {% endfor %}
         </br>
         </br>
-    
         <h2> Reserves </h2>
-    
+
         {% for i in players %} {% if i.role == 'Bench' %}
     
         <p>
-            <a href="{{url_for('showPlayerInfo', team_id = team.id, player_id = i.id)}}">
-                {{i.firstName}} {{i.lastName}} {{i.position}}
-            </a>
-        
-            <a href="{{url_for('editPlayer', team_id = team.id, player_id = i.id)}}"> Edit </a>
-            <a href="{{url_for('deletePlayer', team_id = team.id, player_id = i.id)}}"> Delete </a>
-        </p>
+        <a href="{{url_for('showPlayerInfo', team_id = team.id, player_id = i.id)}}">
+        {{i.firstName}} {{i.lastName}} {{i.position}}</p>
         {% endif %} {% endfor %} {% else %}
     
         <p> This team currently has no players. </p>
