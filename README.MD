@@ -2,7 +2,7 @@
 
 ### Project Description
 
-The goal of this project is to develop a web application that will provide a list of items of different categories while securing the data using third party user registration and authentication.
+The goal of this project is to develop a web application that will provide a list of items of different categories while securing the data using third party user registration and authentication. For the purpose of this project, I have created a NBA team and player database. You can use facebook and google accounts to login. If you are not logged in, you can still view the team, rosters, and player info. While logged in you can add a new team and add players to the created team with the ability to edit and delete all things that you add to the database.
 
 
 ### Languages and Frameworks Used
