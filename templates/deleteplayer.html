@@ -8,11 +8,13 @@
     {% extends "main.html" %}
     {% block content %}
     {% include "header.html" %}
-    <h1> Do you really want to remove {{player.name}} from the team? </h1>
-    <form action='#' method='post'>
-        <input type='submit' , value='Delete'>
-    </form>
-    <a href="#"> Cancel </a>
+    <div class="deletePage">
+        <h1> Do you really want to remove {{player.name}} from the team? </h1>
+        <form action='#' method='post'>
+            <input type='submit' , value='Delete'>
+            </br>
+        </form> 
+    </div>
     {% endblock %}
 </body>
 

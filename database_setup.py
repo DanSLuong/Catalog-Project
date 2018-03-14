@@ -31,9 +31,16 @@ class Team(Base):
 class Player(Base):
     __tablename__ = 'player'
 
-    name = Column(String(250), nullable=False)
+    firstName = Column(String(250), nullable=False)
+    lastName = Column(String(250), nullable=False)
+    playerNum = Column(Integer, nullable=False)
     id = Column(Integer, primary_key=True)
     position = Column(String(250))
+    height = Column(String(250))
+    weight = Column(String(250))
+    age = Column(Integer, nullable=False)
+    college = Column(String(250))
+    birthplace = Column(String(250))
     role = Column(String(250))
     team_id = Column(Integer, ForeignKey('team.id'))
     team = relationship(Team)
@@ -42,8 +49,15 @@ class Player(Base):
     def serialize(self):
         """Return object data in easily serializable format"""
         return{
-            'name': self.name,
+            'firstName': self.firstName,
+            'lastName': self.lastName,
+            'playerNum': self.playerNum,
             'position': self.position,
+            'height': self.height,
+            'weight': self.weight,
+            'age': self.age,
+            'college': self.college,
+            'birthplace': self.birthplace,
             'role': self.role,
             'id': self.id,
         }

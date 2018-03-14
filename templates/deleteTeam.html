@@ -8,11 +8,13 @@
     {% extends "main.html" %}
     {% block content %}
     {% include "header.html" %}
-    <h1> You want to delete {{team.name}} from this list? </h1>
-    <form action='#' method='post'>
-        <input type='submit' , value='Delete'>
-    </form>
-    <a href="{{url_for('showTeams')}}"> Cancel </a>
+    <div class="deletePage">
+        <h1> You want to delete {{team.name}} from this list? </h1>
+        <form action='#' method='post'>
+            <input type='submit' , value='Delete'>
+        </form>
+        <a href="{{url_for('showTeams')}}"> Cancel </a>
+    </div>
     {% endblock %}
 </body>
 

@@ -336,7 +336,12 @@ def showPlayers(team_id):
 @app.route('/teams/<int:team_id>/players/new/', methods=['GET', 'POST'])
 def newPlayers(team_id):
     if request.method == 'POST':
-        newPlayer = Player(name=request.form['name'], position=request.form['position'], role=request.form['role'], team_id=team_id)
+        newPlayer = Player(firstName=request.form['firstName'],
+            lastName=request.form['lastName'], position=request.form['position'],
+            playerNum=request.form['playerNum'], height=request.form['height'],
+            weight=request.form['weight'], age=request.form['age'],
+            birthplace=request.form['birthplace'], college=request.form['college'],
+            role=request.form['role'], team_id=team_id)
         session.add(newPlayer)
         session.commit()
         return redirect(url_for('showPlayers', team_id=team_id))
@@ -349,10 +354,26 @@ def newPlayers(team_id):
 def editPlayer(team_id, player_id):
     editPlayer = session.query(Player).filter_by(id=player_id).one()
     if request.method == 'POST':
-        if request.form['name']:
-            editPlayer.name = request.form['name']
+        if request.form['firstName']:
+            editPlayer.name = request.form['firstName']
+        if request.form['lastName']:
+            editPlayer.name = request.form['lastName']
         if request.form['position']:
             editPlayer.position = request.form['position']
+        if request.form['playerNum']:
+            editPlayer.name = request.form['playerNum']
+        if request.form['height']:
+            editPlayer.name = request.form['height']
+        if request.form['weight']:
+            editPlayer.name = request.form['weight']
+        if request.form['age']:
+            editPlayer.name = request.form['age']
+        if request.form['birthplace']:
+            editPlayer.name = request.form['birthplace']
+        if request.form['college']:
+            editPlayer.name = request.form['College']
+        if request.form['role']:
+            editPlayer.name = request.form['role']
         session.add(editPlayer)
         session.commit()
         return redirect(url_for('showPlayers', team_id=team_id))
