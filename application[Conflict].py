@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, jsonify, url_for, flash, g
+from flask import Flask, render_template, request, redirect, jsonify, url_for, flash
 from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Team, Player, User
@@ -11,7 +11,6 @@ import httplib2
 import json
 from flask import make_response
 import requests
-from functools import wraps
 
 app = Flask(__name__)
 
@@ -282,10 +281,10 @@ def disconnect():
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if user is None:
-            return redirect(url_for('showLogin', next=request.url))
+        if g.user is None:
+            return redirect(url_for('login', next=request.url))
         return f(*args, **kwargs)
-    return decorated_function
+    return decorated function
 
 
 # JSON APs for Team information
@@ -320,7 +319,6 @@ def showTeams():
 
 
 # Create a new team
-@login_required
 @app.route('/team/new/', methods=['GET', 'POST'])
 def newTeam():
     if 'username' not in login_session:
@@ -339,9 +337,9 @@ def newTeam():
 def editTeam(team_id):
     if 'username' not in login_session:
         return redirect('/login')
-    editTeam = session.query(Team).filter_by(id=team_id).one()
     if editTeam.user_id != login_session['user_id']:
         return "<script>function myFunction() {alert('You are not allowed to edit this team.');}</script><body onload='myFunction()'>"
+    editTeam = session.query(Team).filter_by(id=team_id).one()
     if request.method == 'POST':
         if request.form['name']:
             editTeam.name = request.form['name']
@@ -363,9 +361,9 @@ def editTeam(team_id):
 def deleteTeam(team_id):
     if 'username' not in login_session:
         return redirect('/login')
-    teamToDelete = session.query(Team).filter_by(id=team_id).one()
     if teamToDelete.user_id != login_session['user_id']:
         return "<script>function myFunction() {alert('You are not allowed to delete this team.');}</script><body onload='myFunction()'>"
+    teamToDelete = session.query(Team).filter_by(id=team_id).one()
     if request.method == 'POST':
         session.delete(teamToDelete)
         session.commit()
@@ -392,9 +390,9 @@ def showPlayers(team_id):
 def newPlayers(team_id):
     if 'username' not in login_session:
         return redirect('/login')
-    team = session.query(Team).filter_by(id=team_id).one()
     if login_session['user_id'] != team.user_id:
         return "<script>function myFunction() {alert('You can only add players to teams you have created.');}</script><body onload='myFunction()'>"
+    team = session.query(Team).filter_by(id=team_id).one()
     if request.method == 'POST':
         newPlayer = Player(
             firstName=request.form['firstName'],
@@ -410,7 +408,7 @@ def newPlayers(team_id):
             team_id=team_id)
         session.add(newPlayer)
         session.commit()
-        return redirect(url_for('showPlayers', team_id=team_id, players_id=player_id))
+        return redirect(url_for('showPlayers', team_id=team_id))
     else:
         return render_template('newplayers.html', team_id=team_id)
     return render_template('newPlayers.html', team=team)
@@ -430,10 +428,10 @@ def showPlayerInfo(team_id, player_id):
 def editPlayer(team_id, player_id):
     if 'username' not in login_session:
         return redirect('/login')
-    editPlayer = session.query(Player).filter_by(id=player_id).one()
-    team = session.query(Team).filter_by(id=team_id).one()
     if login_session['user_id'] != team.user_id:
         return "<script>function myFunction() {alert('You can only edit players on teams you have created.');}</script><body onload='myFunction()'>"
+    editPlayer = session.query(Player).filter_by(id=player_id).one()
+    team = session.query(Team).filter_by(id=team_id).one()
     if request.method == 'POST':
         if request.form['firstName']:
             editPlayer.name = request.form['firstName']
@@ -469,10 +467,10 @@ def editPlayer(team_id, player_id):
 def deletePlayer(team_id, player_id):
     if 'username' not in login_session:
         return redirect('/login')
-    playerToDelete = session.query(Player).filter_by(id=player_id).one()
-    team = session.query(Team).filter_by(id=team_id).one()
     if login_session['user_id'] != team.user_id:
         return "<script>function myFunction() {alert('You can only delete players on teams you have created.');}</script><body onload='myFunction()'>"
+    playerToDelete = session.query(Player).filter_by(id=player_id).one()
+    team = session.query(Team).filter_by(id=team_id).one()
     if request.method == 'POST':
         session.delete(playerToDelete)
         session.commit()
