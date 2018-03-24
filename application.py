@@ -369,7 +369,7 @@ def deleteTeam(team_id):
     if request.method == 'POST':
         session.delete(teamToDelete)
         session.commit()
-        return redirect('showTeams', team_id=team_id)
+        return redirect(url_for('showTeams'), team_id=team_id)
     else:
         return render_template('deleteTeam.html', team=teamToDelete)
 
@@ -410,10 +410,9 @@ def newPlayers(team_id):
             team_id=team_id)
         session.add(newPlayer)
         session.commit()
-        return redirect(url_for('showPlayers', team_id=team_id, players_id=player_id))
+        return redirect(url_for('showPlayers', team_id=team_id))
     else:
         return render_template('newplayers.html', team_id=team_id)
-    return render_template('newPlayers.html', team=team)
 
 
 # Shows infromation about the selected player
