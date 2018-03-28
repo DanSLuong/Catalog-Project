@@ -1,21 +1,11 @@
-<html>
-
-<head>
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
-</head>
-
-<body>
-    {% extends "main.html" %}
-    {% block content %}
-    {% include "header.html" %}
-    <div class="deletePage">
-        <h1> You want to delete {{team.name}} from this list? </h1>
-        <form action='#' method='post'>
-            <input type='submit' , value='Delete'>
-        </form>
-        <a href="{{url_for('showTeams')}}"> Cancel </a>
-    </div>
-    {% endblock %}
-</body>
-
-</html>
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+<div class="deletePage">
+    <h1> You want to delete {{team.name}} from this list? </h1>
+    <form action='#' method='post'>
+        <input type='submit' , value='Delete'>
+    </form>
+    <a href="{{url_for('showTeams')}}"> Cancel </a>
+</div>
+{% endblock %}

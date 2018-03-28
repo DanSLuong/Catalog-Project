@@ -1,59 +1,51 @@
-<html>
+ {% extends "main.html" %}
+ {% block content %}
+ {% include "header.html" %}
+<div class='pane infoPages'>
+    <h1> NBA Teams </h1>
+    <p> This page contains a list of the teams that currently exists in the National Basketball Association! </p>
+    </br>
+    </br>
+    <h1> Western Conference </h1>
+    {% for team in teams %}
+    {% if team.conference == "West" %}
+    <p>
+        <a href="{{url_for('showPlayers', team_id = team.id)}}">
+            <strong> {{team.city}} {{team.name}} </strong>
+        </a>
+        <a href="{{url_for('editTeam', team_id=team.id)}}">
+            Edit
+        </a>
+        <a href="{{url_for('deleteTeam', team_id=team.id)}}">
+            Delete
+        </a>
+    </p>
+    {% endif %}
+    {% endfor %}
+    </br>
+    <h1> Eastern Conference </h1>
+    {% for team in teams %}
+    {% if team.conference == "East" %}
+    <p>
+        <a href="{{url_for('showPlayers', team_id = team.id)}}">
+            <strong> {{team.city}} {{team.name}} </strong>
+        </a>
+        <a href="{{url_for('editTeam', team_id=team.id)}}">
+            Edit
+        </a>
+        <a href="{{url_for('deleteTeam', team_id=team.id)}}">
+            Delete
+        </a>
+    </p>
+    {% endif %}
+    {% endfor %}
 
-<head>
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
-</head>
-
-<body>
-    {% extends "main.html" %}
-    {% block content %}
-    {% include "header.html" %}
-    <div class='pane infoPages'>
-        <h1> NBA Teams </h1>
-        <p> This page contains a list of the teams that currently exists in the National Basketball Association! </p>
-        </br></br>
-        <h1> Western Conference </h1>
-        {% for team in teams %}
-        {% if team.conference == "West" %}
-        <p>
-            <a href="{{url_for('showPlayers', team_id = team.id)}}">
-                <strong> {{team.city}} {{team.name}} </strong>
-            </a>
-            <a href="{{url_for('editTeam', team_id=team.id)}}">
-                Edit
-            </a>
-            <a href="{{url_for('deleteTeam', team_id=team.id)}}">
-                Delete
-            </a>
-        </p>
-        {% endif %}
-        {% endfor %}
-        </br>
-        <h1> Eastern Conference </h1>
-        {% for team in teams %}
-        {% if team.conference == "East" %}
-        <p>
-            <a href="{{url_for('showPlayers', team_id = team.id)}}">
-                <strong> {{team.city}} {{team.name}} </strong>
-            </a>
-            <a href="{{url_for('editTeam', team_id=team.id)}}">
-                Edit
-            </a>
-            <a href="{{url_for('deleteTeam', team_id=team.id)}}">
-                Delete
-            </a>
-        </p>
-        {% endif %}
-        {% endfor %}
-
-        </br></br>
-        <div class="newItem">
-            <a href="{{url_for('newTeam')}}">
-                <p> Add a new NBA team </p>
-            </a>
-        </div>
+    </br>
+    </br>
+    <div class="newItem">
+        <a href="{{url_for('newTeam')}}">
+            <p> Add a new NBA team </p>
+        </a>
     </div>
-    {% endblock %}
-</body>
-
-</html>
+</div>
+{% endblock %}

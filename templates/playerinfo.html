@@ -1,26 +1,16 @@
-<html>
-
-<head>
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
-</head>
-
-<body>
-    {% extends "main.html" %}
-    {% block content %}
-    {% include "header.html" %}
-    <div class='pane infoPages'>
-        {% for i in players %}
-        <h1> {{i.firstName}} {{i.lastName}} </h1>
-        <p> 
-            {{i.firstName}} {{i.lastName}} is a {{i.role}} caliber player for the {{i.name}}. 
-            He is from {{i.birthplace}} and went to school at {{i.college}}.
-        </p>
-        <p> Age: {{i.age}}</p>
-        <p> Height: {{i.height}}           Weight: {{i.weight}} </p>
-        <p> Position: {{i.position}}       Jersey Number: {{i.playerNum}} </p>
-        {% endfor %}
-    </div>
-    {% endblock %}
-</body>
-
-</html>
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+<div class='pane infoPages'>
+    {% for i in players %}
+    <h1> {{i.firstName}} {{i.lastName}} </h1>
+    <p>
+        {{i.firstName}} {{i.lastName}} is a {{i.role}} caliber player for the {{i.name}}. He is from {{i.birthplace}} and went to
+        school at {{i.college}}.
+    </p>
+    <p> Age: {{i.age}}</p>
+    <p> Height: {{i.height}} Weight: {{i.weight}} </p>
+    <p> Position: {{i.position}} Jersey Number: {{i.playerNum}} </p>
+    {% endfor %}
+</div>
+{% endblock %}

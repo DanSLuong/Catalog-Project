@@ -1,66 +1,56 @@
-<html>
+{% extends "main.html" %}
+{% block content %}
+{% include "header.html" %}
+<div class='pane infoPages'>
+    <h1>{{ team.name }}</h1>
 
-<head>
-    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='styles.css') }}">
-</head>
+    <p> The {{ team.name }} are based in {{ team.city }}, {{ team.state }}.</p>
+    <br> {% with messages = get_flashed_messages() %} {% if messages %}
 
-<body>
-    {% extends "main.html" %}
-    {% block content %}
-    {% include "header.html" %}
-    <div class='pane infoPages'>
-        <h1>{{ team.name }}</h1>
-    
-        <p> The {{ team.name }} are based in {{ team.city }}, {{ team.state }}.</p>
-        <br> {% with messages = get_flashed_messages() %} {% if messages %}
-    
-        <ul>
-            {% for message in messages %}
-            <li>
-                <strong> {{ message }} </strong>
-            </li>
-            {% endfor %}
-        </ul>
-        {% endif %} {% endwith %} {% if players !=[] %}
-    
-        <h2> Starters </h2>
-    
-        {% for i in players %} {% if i.role == 'Starter' %}
-    
-        <p>
-            <a href="{{url_for('showPlayerInfo', team_id=team.id, player_id = i.id)}}">
-                {{i.firstName}} {{i.lastName}} {{i.position}}
-            </a>
-            <a href="{{url_for('editPlayer', team_id = team.id, player_id = i.id)}}"> Edit </a>
-            <a href="{{url_for('deletePlayer', team_id = team.id, player_id = i.id)}}"> Delete </a>
-        </p>
-        {% endif %} {% endfor %}
-    
-        </br>
-        </br>
-    
-        <h2> Reserves </h2>
-    
-        {% for i in players %} {% if i.role == 'Bench' %}
-    
-        <p>
-            <a href="{{url_for('showPlayerInfo', team_id = team.id, player_id = i.id)}}">
-                {{i.firstName}} {{i.lastName}} {{i.position}}
-            </a>
-        
-            <a href="{{url_for('editPlayer', team_id = team.id, player_id = i.id)}}"> Edit </a>
-            <a href="{{url_for('deletePlayer', team_id = team.id, player_id = i.id)}}"> Delete </a>
-        </p>
-        {% endif %} {% endfor %} {% else %}
-    
-        <p> This team currently has no players. </p>
-        <a href="{{url_for('newPlayers', team_id = team.id)}}"> Add New Player </a>
-        {% endif %}
-        <a href="{{url_for('newPlayers', team_id = team.id)}}"> Add a new player </a>
-        </br>
-        </br>
-    </div>
-    {% endblock %}
-</body>
+    <ul>
+        {% for message in messages %}
+        <li>
+            <strong> {{ message }} </strong>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %} {% endwith %} {% if players !=[] %}
 
-</html>
+    <h2> Starters </h2>
+
+    {% for i in players %} {% if i.role == 'Starter' %}
+
+    <p>
+        <a href="{{url_for('showPlayerInfo', team_id=team.id, player_id = i.id)}}">
+            {{i.firstName}} {{i.lastName}} {{i.position}}
+        </a>
+        <a href="{{url_for('editPlayer', team_id = team.id, player_id = i.id)}}"> Edit </a>
+        <a href="{{url_for('deletePlayer', team_id = team.id, player_id = i.id)}}"> Delete </a>
+    </p>
+    {% endif %} {% endfor %}
+
+    </br>
+    </br>
+
+    <h2> Reserves </h2>
+
+    {% for i in players %} {% if i.role == 'Bench' %}
+
+    <p>
+        <a href="{{url_for('showPlayerInfo', team_id = team.id, player_id = i.id)}}">
+            {{i.firstName}} {{i.lastName}} {{i.position}}
+        </a>
+
+        <a href="{{url_for('editPlayer', team_id = team.id, player_id = i.id)}}"> Edit </a>
+        <a href="{{url_for('deletePlayer', team_id = team.id, player_id = i.id)}}"> Delete </a>
+    </p>
+    {% endif %} {% endfor %} {% else %}
+
+    <p> This team currently has no players. </p>
+    <a href="{{url_for('newPlayers', team_id = team.id)}}"> Add New Player </a>
+    {% endif %}
+    <a href="{{url_for('newPlayers', team_id = team.id)}}"> Add a new player </a>
+    </br>
+    </br>
+</div>
+{% endblock %}
