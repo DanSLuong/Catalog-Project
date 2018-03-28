@@ -1,4 +1,10 @@
-from flask import Flask, render_template, request, redirect, jsonify, url_for, flash, g
+from flask import (Flask,
+                    render_template,
+                    request, redirect,
+                    jsonify,
+                    url_for,
+                    flash,
+                    g)
 from sqlalchemy import create_engine, asc
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Team, Player, User
@@ -100,7 +106,11 @@ def fbconnect():
     output += '!</h1>'
     output += '<img src="'
     output += login_session['picture']
-    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+    output += ' " style = "width: 300px;' \
+              'height: 300px;' \
+              'border-radius: 150px;' \
+              '-webkit-border-radius: 150px;' \
+              '-moz-border-radius: 150px;"> '
 
     flash("Now logged in as %s" % login_session['username'])
     return output
@@ -202,7 +212,11 @@ def gconnect():
     output += '!</h1>'
     output += '<img src="'
     output += login_session['picture']
-    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+    output += ' " style = "width: 300px;' \
+              'height: 300px;' \
+              'border-radius: 150px;' \
+              '-webkit-border-radius: 150px;' \
+              '-moz-border-radius: 150px;"> '
     flash("you are now logged in as %s" % login_session['username'])
     print "done!"
     return output
@@ -282,7 +296,7 @@ def disconnect():
 def login_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
-        if user is None:
+        if 'username' not in login_session:
             return redirect(url_for('showLogin', next=request.url))
         return f(*args, **kwargs)
     return decorated_function
@@ -320,13 +334,15 @@ def showTeams():
 
 
 # Create a new team
-@login_required
 @app.route('/team/new/', methods=['GET', 'POST'])
+@login_required
 def newTeam():
-    if 'username' not in login_session:
-        return redirect('/login')
     if request.method == 'POST':
-        newTeam = Team(name=request.form['name'], city=request.form['city'], state=request.form['state'], conference=request.form['conference'])
+        newTeam = Team(name=request.form['name'],
+                       city=request.form['city'],
+                       state=request.form['state'],
+                       conference=request.form['conference'],
+                       user_id=login_session['user_id'])
         session.add(newTeam)
         session.commit()
         return redirect(url_for('showTeams'))
@@ -336,12 +352,13 @@ def newTeam():
 
 # Edit a Team
 @app.route('/team/<int:team_id>/edit/', methods=['GET', 'POST'])
+@login_required
 def editTeam(team_id):
-    if 'username' not in login_session:
-        return redirect('/login')
     editTeam = session.query(Team).filter_by(id=team_id).one()
     if editTeam.user_id != login_session['user_id']:
-        return "<script>function myFunction() {alert('You are not allowed to edit this team.');}</script><body onload='myFunction()'>"
+        return "<script>function myFunction()" \
+               "{alert('You are not allowed to edit this team.');}" \
+               "</script><body onload='myFunction()'>"
     if request.method == 'POST':
         if request.form['name']:
             editTeam.name = request.form['name']
@@ -360,16 +377,17 @@ def editTeam(team_id):
 
 # Delete a Team
 @app.route('/team/<int:team_id>/delete/', methods=['GET', 'POST'])
+@login_required
 def deleteTeam(team_id):
-    if 'username' not in login_session:
-        return redirect('/login')
     teamToDelete = session.query(Team).filter_by(id=team_id).one()
     if teamToDelete.user_id != login_session['user_id']:
-        return "<script>function myFunction() {alert('You are not allowed to delete this team.');}</script><body onload='myFunction()'>"
+        return "<script>function myFunction()" \
+               "{alert('You are not allowed to delete this team.');}" \
+               "</script><body onload='myFunction()'>"
     if request.method == 'POST':
         session.delete(teamToDelete)
         session.commit()
-        return redirect(url_for('showTeams'), team_id=team_id)
+        return redirect(url_for('showTeams'))
     else:
         return render_template('deleteTeam.html', team=teamToDelete)
 
@@ -389,12 +407,13 @@ def showPlayers(team_id):
 
 # Add a new player
 @app.route('/team/<int:team_id>/players/new/', methods=['GET', 'POST'])
+@login_required
 def newPlayers(team_id):
-    if 'username' not in login_session:
-        return redirect('/login')
     team = session.query(Team).filter_by(id=team_id).one()
     if login_session['user_id'] != team.user_id:
-        return "<script>function myFunction() {alert('You can only add players to teams you have created.');}</script><body onload='myFunction()'>"
+        return "<script>function myFunction() " \
+               "{alert('You can only add players to teams you have created.');}" \
+               "</script><body onload='myFunction()'>"
     if request.method == 'POST':
         newPlayer = Player(
             firstName=request.form['firstName'],
@@ -426,13 +445,14 @@ def showPlayerInfo(team_id, player_id):
 
 # Edit a player
 @app.route('/team/<int:team_id>/players/<int:player_id>/edit/', methods=['GET', 'POST'])
+@login_required
 def editPlayer(team_id, player_id):
-    if 'username' not in login_session:
-        return redirect('/login')
     editPlayer = session.query(Player).filter_by(id=player_id).one()
     team = session.query(Team).filter_by(id=team_id).one()
     if login_session['user_id'] != team.user_id:
-        return "<script>function myFunction() {alert('You can only edit players on teams you have created.');}</script><body onload='myFunction()'>"
+        return "<script>function myFunction() "\
+               "{alert('You can only edit players on teams you have created.');}" \
+               "</script><body onload='myFunction()'>"
     if request.method == 'POST':
         if request.form['firstName']:
             editPlayer.name = request.form['firstName']
@@ -465,13 +485,14 @@ def editPlayer(team_id, player_id):
 
 # Delete a player
 @app.route('/team/<int:team_id>/players/<int:player_id>/delete/', methods=['GET', 'POST'])
+@login_required
 def deletePlayer(team_id, player_id):
-    if 'username' not in login_session:
-        return redirect('/login')
     playerToDelete = session.query(Player).filter_by(id=player_id).one()
     team = session.query(Team).filter_by(id=team_id).one()
     if login_session['user_id'] != team.user_id:
-        return "<script>function myFunction() {alert('You can only delete players on teams you have created.');}</script><body onload='myFunction()'>"
+        return "<script>function myFunction() " \
+               "{alert('You can only delete players on teams you have created.');}" \
+               "</script><body onload='myFunction()'>"
     if request.method == 'POST':
         session.delete(playerToDelete)
         session.commit()
